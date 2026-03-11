@@ -1,0 +1,5 @@
+body.theme-neon{--bg:#050510;--surface:#0d0d20;--border:#2020aa;--accent:#ff00ff;--accent2:#00ffff;--correct:#00ff88;--present:#ffaa00;--absent:#1a1a40;--text:#e0e0ff;}
+body.theme-gold{--bg:#0f0a00;--surface:#1a1200;--border:#4a3800;--accent:#ffd700;--accent2:#ffaa00;--correct:#88cc00;--present:#ff8800;--absent:#2a2000;--text:#fff8e0;--tile-font:'Playfair Display',serif;}
+body.theme-pastel{--bg:#f5f0ff;--surface:#ede5ff;--border:#c4b0ee;--accent:#7c3aed;--accent2:#db2777;--correct:#059669;--present:#d97706;--absent:#ddd6fe;--text:#1e1b4b;}
+body.theme-cyber{--bg:#000a05;--surface:#001a0d;--border:#003320;--accent:#00ff41;--accent2:#00cc33;--correct:#00ff41;--present:#ffff00;--absent:#001a0d;--text:#00ff41;--tile-font:'Orbitron',sans-serif;}
+body.theme-blood{--bg:#0f0000;--surface:#1a0000;--border:#4a0000;--accent:#ff2020;--accent2:#ff6060;--correct:#ff4040;--present:#ff8800;--absent:#2a0000;--text:#ffe0e0;}
