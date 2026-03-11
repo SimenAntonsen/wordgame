@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Word Dash</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Orbitron:wght@700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/themes.css">
+  <link rel="stylesheet" href="css/keyboard.css">
+</head>
+<body>
+
+<!-- AUTH -->
+<div id="screen-auth" class="screen active">
+  <div style="margin-top:24px;text-align:center;">
+    <div class="logo">WORD<span>DASH</span></div>
+    <div class="tagline">The Ultimate Word Battle</div>
+  </div>
+  <div class="auth-tabs">
+    <div class="auth-tab active" onclick="switchAuthTab('login')">Login</div>
+    <div class="auth-tab" onclick="switchAuthTab('register')">Register</div>
+    <div class="auth-tab" onclick="guestMode()">Guest</div>
+  </div>
+  <div id="auth-login" class="input-group">
+    <div class="input-label">Username</div>
+    <input class="input" id="login-user" placeholder="enter username" autocomplete="off" onkeydown="if(event.key==='Enter')doLogin()">
+    <div class="input-label">Password</div>
+    <input class="input" id="login-pass" type="password" placeholder="enter password" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="btn primary" onclick="doLogin()">Login</button>
+    <div id="login-err" style="font-size:.58rem;color:#f04040;letter-spacing:1px;text-align:center;min-height:1rem;"></div>
+  </div>
+  <div id="auth-register" class="input-group" style="display:none;">
+    <div class="input-label">Username</div>
+    <input class="input" id="reg-user" placeholder="choose username" autocomplete="off" onkeydown="if(event.key==='Enter')doRegister()">
+    <div class="input-label">Password</div>
+    <input class="input" id="reg-pass" type="password" placeholder="choose password" onkeydown="if(event.key==='Enter')doRegister()">
+    <button class="btn primary" onclick="doRegister()">Create Account</button>
+    <div id="reg-err" style="font-size:.58rem;color:#f04040;letter-spacing:1px;text-align:center;min-height:1rem;"></div>
+  </div>
+</div>
+
+<!-- MAIN MENU -->
+<div id="screen-menu" class="screen">
+  <div class="game-header" style="padding-top:16px;">
+    <div class="game-logo">WORD<span>DASH</span></div>
+    <div style="display:flex;gap:8px;">
+      <button class="btn sm ghost" onclick="showScreen('screen-themes')">🎨</button>
+      <button class="btn sm danger" onclick="doLogout()">Logout</button>
+    </div>
+  </div>
+  <div class="profile-card">
+    <div class="avatar" id="menu-avatar">?<span class="level-badge" id="menu-level">1</span></div>
+    <div class="profile-info">
+      <div class="profile-name" id="menu-username">Player</div>
+      <div class="profile-rank" id="menu-rank">Scribbler</div>
+      <div class="xp-bar-bg"><div class="xp-bar-fill" id="menu-xp-bar" style="width:0%"></div></div>
+      <div class="xp-label" id="menu-xp-label">0 / 100 XP</div>
+    </div>
+  </div>
+  <!-- Language Picker -->
+  <div style="width:100%;position:relative;">
+    <div class="lang-picker-btn" onclick="toggleLangDropdown()">
+      <span class="lang-flag" id="lang-flag"></span>
+      <div class="lang-label">
+        <div class="lang-label-name" id="lang-name">English</div>
+        <div class="lang-label-note">Word language</div>
+      </div>
+      <span class="lang-caret">&#9660;</span>
+    </div>
+    <div class="lang-dropdown" id="lang-dropdown"></div>
+  </div>
+  <div class="menu-grid">
+    <div class="menu-btn" onclick="startSolo()"><div class="icon">🎮</div><div class="label">Solo Play</div><div class="sub">vs the clock</div></div>
+    <div class="menu-btn" onclick="showScreen('screen-multiplayer')"><div class="icon">⚔️</div><div class="label">Versus</div><div class="sub">1v1 battle</div></div>
+    <div class="menu-btn" onclick="showScreen('screen-friends')"><div class="icon">👥</div><div class="label">Friends</div><div class="sub" id="friends-count-sub">0 friends</div></div>
+    <div class="menu-btn" onclick="showScreen('screen-profile')"><div class="icon">🏆</div><div class="label">Profile</div><div class="sub">stats &amp; badges</div></div>
+  </div>
+  <div class="badges-row" id="menu-badges"></div>
+</div>
+
+<!-- GAME -->
+<div id="screen-game" class="screen">
+  <div class="game-header">
+    <div class="game-logo">WORD<span>DASH</span></div>
+    <div class="lang-indicator" id="game-lang-indicator"></div><div class="game-stats">
+      <div>W <span class="stat-val" id="g-wins">0</span></div>
+      <div>&#9670;=&#9670; <span class="stat-val" id="g-streak">0</span></div>
+    </div>
+  </div>
+  <div class="timer-container"><div class="timer-bar" id="timer-bar"></div></div>
+  <div class="controls-row">
+    <div class="category-badge" id="category-badge">LOADING...</div>
+    <div class="time-display" id="time-display">60</div>
+  </div>
+  <div id="opponent-track" class="opponent-track" style="display:none;">
+    <div class="opp-name" id="opp-name">Opponent</div>
+    <div class="opp-rows" id="opp-rows"></div>
+    <div class="opp-status" id="opp-status">playing...</div>
+  </div>
+  <div class="hint-text" id="hint-text">💡 press hint to reveal a clue</div>
+  <div class="grid" id="grid"></div>
+  <div class="keyboard" id="keyboard"></div>
+  <div class="controls-row" style="justify-content:space-between;">
+    <button class="hint-btn" id="hint-btn" onclick="useHint()">💡 HINT (-5s)</button>
+    <button class="btn sm ghost" onclick="quitGame()">✕ Quit</button>
+  </div>
+</div>
+
+<!-- MULTIPLAYER -->
+<div id="screen-multiplayer" class="screen">
+  <div class="back-btn" onclick="showScreen('screen-menu')">← Back</div>
+  <div class="logo" style="font-size:2rem;">VERSUS</div>
+  <div class="card">
+    <div class="card-title">Create Room</div>
+    <p style="font-size:.62rem;color:#808098;letter-spacing:1px;line-height:1.6;margin-bottom:12px;">Create a room and share the code with your opponent.</p>
+    <button class="btn primary" onclick="createRoom()">⚔ Create Room</button>
+  </div>
+  <div class="divider-text">OR</div>
+  <div class="card">
+    <div class="card-title">Join Room</div>
+    <div class="input-group">
+      <input class="input" id="join-code" placeholder="room code" style="letter-spacing:4px;text-transform:uppercase;text-align:center;" maxlength="36" autocomplete="off">
+      <button class="btn" onclick="joinRoom()">Join</button>
+    </div>
+  </div>
+  <div id="room-status-card" class="card" style="display:none;text-align:center;">
+    <div class="card-title" id="room-status-title">Your Room Code</div>
+    <div class="room-code-display" id="room-code-display">------</div>
+    <div class="mp-status waiting" id="room-status-msg">Waiting for opponent...</div>
+    <button class="btn sm ghost" style="margin-top:12px;width:100%;" onclick="cancelRoom()">Cancel</button>
+  </div>
+  <div id="friend-challenge-card" class="card" style="display:none;">
+    <div class="card-title">Challenge a Friend</div>
+    <div class="scroll-list" id="challenge-friends-list"></div>
+  </div>
+</div>
+
+<!-- FRIENDS -->
+<div id="screen-friends" class="screen">
+  <div class="back-btn" onclick="showScreen('screen-menu')">← Back</div>
+  <div class="logo" style="font-size:2rem;">FRIENDS</div>
+  <div class="card">
+    <div class="card-title">Add Friend</div>
+    <div style="display:flex;gap:8px;">
+      <input class="input" id="add-friend-input" placeholder="username" autocomplete="off">
+      <button class="btn sm primary" onclick="addFriend()">Add</button>
+    </div>
+    <div id="add-friend-msg" style="font-size:.58rem;margin-top:8px;letter-spacing:1px;min-height:1rem;"></div>
+  </div>
+  <div class="scroll-list" id="friends-list"></div>
+</div>
+
+<!-- PROFILE -->
+<div id="screen-profile" class="screen">
+  <div class="back-btn" onclick="showScreen('screen-menu')">← Back</div>
+  <div class="profile-card">
+    <div class="avatar" id="profile-avatar">?<span class="level-badge" id="profile-level-badge">1</span></div>
+    <div class="profile-info">
+      <div class="profile-name" id="profile-username">Player</div>
+      <div class="profile-rank" id="profile-rank-display">Scribbler</div>
+      <div class="xp-bar-bg"><div class="xp-bar-fill" id="profile-xp-bar" style="width:0%"></div></div>
+      <div class="xp-label" id="profile-xp-label">0 / 100 XP</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Stats</div>
+    <div class="end-stats" style="margin:0;padding:0;border:none;">
+      <div class="end-stat"><span id="ps-wins">0</span>Wins</div>
+      <div class="end-stat"><span id="ps-losses">0</span>Losses</div>
+      <div class="end-stat"><span id="ps-streak">0</span>Best Streak</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Badges</div>
+    <div class="badges-row" id="profile-badges"></div>
+  </div>
+  <button class="btn" onclick="showScreen('screen-themes')">🎨 Themes</button>
+</div>
+
+<!-- THEMES -->
+<div id="screen-themes" class="screen">
+  <div class="back-btn" onclick="showScreen('screen-menu')">← Back</div>
+  <div class="logo" style="font-size:2rem;">THEMES</div>
+  <p style="font-size:.62rem;color:#808098;letter-spacing:1px;text-align:center;">Level up to unlock new themes.</p>
+  <div class="themes-grid" id="themes-grid"></div>
+</div>
+
+<!-- END SCREEN -->
+<div class="end-screen" id="end-screen">
+  <div class="end-card">
+    <div class="end-result" id="end-result">WIN!</div>
+    <div class="end-word">The word was<strong id="end-word-display">CRANE</strong></div>
+    <div class="xp-gained" id="xp-gained">+0 XP</div>
+    <div id="word-meaning" style="font-size:.62rem;color:#808098;letter-spacing:1px;min-height:1rem;margin-bottom:4px;"></div>
+    <div class="end-stats">
+      <div class="end-stat"><span id="es-guesses">3</span>Guesses</div>
+      <div class="end-stat"><span id="es-time">42s</span>Time Left</div>
+      <div class="end-stat"><span id="es-streak">0</span>Streak</div>
+    </div>
+    <div class="end-btn-row">
+      <button class="btn primary" onclick="newGame()" style="flex:1;">&#9654; Again</button>
+      <button class="btn ghost" onclick="goMenu()" style="flex:1;">Menu</button>
+    </div>
+  </div>
+</div>
+
+<div class="message" id="message"></div>
+<div class="unlock-toast" id="unlock-toast">�=� Unlocked!</div>
+<!-- LEADERBOARD -->
+<div id="screen-leaderboard" class="screen">
+  <div class="back-btn" onclick="showScreen('screen-menu')">&#8592; Back</div>
+  <div class="logo" style="font-size:2rem;">LEADERBOARD</div>
+  <div id="lb-my-rank" style="display:none;font-size:.6rem;letter-spacing:2px;color:var(--accent);background:rgba(240,224,64,.08);padding:6px 14px;border-radius:3px;border:1px solid var(--accent);"></div>
+  <div class="auth-tabs" style="margin-bottom:0;">
+    <div class="lb-tab auth-tab active" onclick="switchLbTab('global')">GLOBAL</div>
+    <div class="lb-tab auth-tab" onclick="switchLbTab('friends')">FRIENDS</div>
+  </div>
+  <div id="lb-list" style="width:100%;display:flex;flex-direction:column;gap:4px;margin-top:8px;"></div>
+</div>
+
+
+<script src="js/flags.js"></script>
+<script src="js/languages.js"></script>
+<script src="js/api.js"></script>
+<script src="js/game.js"></script>
+<script src="js/keyboard.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/multiplayer.js"></script>
+<script src="js/leaderboard.js"></script>
+<script src="js/auth.js"></script>
+<script>
+  // ── Boot ────────────────────────────────────────────────────────────────
+  // currentLang is global so all JS files can read/write it
+  var currentLang = 'en';
+
+  document.addEventListener('keydown', function(e) {
+    if (document.getElementById('screen-game').classList.contains('active')) {
+      if (e.key === 'Enter')          handleKey('ENTER');
+      else if (e.key === 'Backspace') handleKey('⌫');
+      else if (/^[a-zA-ZÀ-ÖØ-öø-ÿĀ-žÆæØøÅå]$/.test(e.key)) handleKey(e.key.toUpperCase());
+    }
+  });
+
+  window.addEventListener('load', async function() {
+    const restored = await tryRestoreSession();
+    if (!restored) showScreen('screen-auth');
+  });
+</script>
+</body>
+</html>
