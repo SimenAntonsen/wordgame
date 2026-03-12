@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="6" fill="#0a0a1a"/>
+  <rect x="4" y="4" width="7" height="7" rx="1.5" fill="#1a1a2e" stroke="#2a2a4a" stroke-width="0.5"/>
+  <rect x="12.5" y="4" width="7" height="7" rx="1.5" fill="#1a1a2e" stroke="#2a2a4a" stroke-width="0.5"/>
+  <rect x="21" y="4" width="7" height="7" rx="1.5" fill="#1a1a2e" stroke="#2a2a4a" stroke-width="0.5"/>
+  <rect x="4" y="12.5" width="7" height="7" rx="1.5" fill="#1a1a2e" stroke="#2a2a4a" stroke-width="0.5"/>
+  <rect x="12.5" y="12.5" width="7" height="7" rx="1.5" fill="#ff2d78" stroke="#ff2d78" stroke-width="0.5"/>
+  <rect x="21" y="12.5" width="7" height="7" rx="1.5" fill="#1a1a2e" stroke="#2a2a4a" stroke-width="0.5"/>
+  <rect x="4" y="21" width="7" height="7" rx="1.5" fill="#f0e040" stroke="#f0e040" stroke-width="0.5"/>
+  <rect x="12.5" y="21" width="7" height="7" rx="1.5" fill="#f0e040" stroke="#f0e040" stroke-width="0.5"/>
+  <rect x="21" y="21" width="7" height="7" rx="1.5" fill="#f0e040" stroke="#f0e040" stroke-width="0.5"/>
+  <text x="7.5" y="10.2" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="5.5" font-weight="900" fill="#404060">W</text>
+  <text x="16" y="10.2" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="5.5" font-weight="900" fill="#404060">O</text>
+  <text x="24.5" y="10.2" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="5.5" font-weight="900" fill="#404060">R</text>
+  <text x="7.5" y="18.7" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="5.5" font-weight="900" fill="#404060">D</text>
+  <text x="16" y="18.7" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="5.5" font-weight="900" fill="#fff">D</text>
+  <text x="24.5" y="18.7" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="5.5" font-weight="900" fill="#404060">A</text>
+  <text x="7.5" y="27.2" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="5.5" font-weight="900" fill="#0a0a1a">S</text>
+  <text x="16" y="27.2" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="5.5" font-weight="900" fill="#0a0a1a">H</text>
+  <text x="24.5" y="27.2" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="5.5" font-weight="900" fill="#0a0a1a">!</text>
+</svg>
